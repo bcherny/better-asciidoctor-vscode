@@ -1,126 +1,111 @@
 {
-    "name": "asciidoctor-vscode",
-    "displayName": "AsciiDoc",
-    "description": "Live preview (with AsciiDoctor), syntax highlighting and symbols (outline view)",
-    "version": "0.3.8",
-    "publisher": "joaompinto",
-    "author": "João Pinto <lamego.pinto@gmail.com>",
-    "license": "MIT",
-    "readme": "README.md",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/joaompinto/asciidoctor-vscode"
-    },
-    "galleryBanner": {
-        "color": "#78d6f0",
-        "theme": "light"
-    },
-    "bugs": "https://github.com/joaompinto/asciidoctor-vscode/issues",
-    "homepage": "https://github.com/joaompinto/asciidoctor-vscode/blob/master/README.md",
-    "icon": "images/icon.png",
-    "main": "./out/src/extension",
-    "engines": {
-        "vscode": "^1.5.0"
-    },
-    "categories": [
-        "Languages"
+  "name": "asciidoctor-vscode",
+  "displayName": "AsciiDoc",
+  "description": "Live preview (with AsciiDoctor), syntax highlighting and symbols (outline view)",
+  "version": "0.3.8",
+  "publisher": "joaompinto",
+  "author": "João Pinto <lamego.pinto@gmail.com>",
+  "license": "MIT",
+  "readme": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joaompinto/asciidoctor-vscode"
+  },
+  "galleryBanner": {
+    "color": "#78d6f0",
+    "theme": "light"
+  },
+  "bugs": "https://github.com/joaompinto/asciidoctor-vscode/issues",
+  "homepage": "https://github.com/joaompinto/asciidoctor-vscode/blob/master/README.md",
+  "icon": "images/icon.png",
+  "main": "./out/src/extension",
+  "engines": {
+    "vscode": "^1.5.0"
+  },
+  "categories": [
+    "Languages"
+  ],
+  "activationEvents": [
+    "onLanguage:asciidoc"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "asciidoc",
+        "aliases": [
+          "AsciiDoc",
+          "AsciiDoc(tor)"
+        ],
+        "extensions": [
+          ".adoc",
+          ".asciidoc"
+        ],
+        "configuration": "./asciidoc-language-configuration.json"
+      }
     ],
-    "activationEvents": [
-        "onLanguage:asciidoc"
+    "grammars": [
+      {
+        "language": "asciidoc",
+        "scopeName": "text.asciidoc",
+        "path": "./syntaxes/Asciidoctor.tmLanguage"
+      }
     ],
-    "contributes": {
-        "languages": [
-            {
-                "id": "asciidoc",
-                "aliases": [
-                    "AsciiDoc",
-                    "AsciiDoc(tor)"
-                ],
-                "extensions": [
-                    ".adoc",
-                    ".asciidoc"
-                ],
-                "configuration": "./asciidoc-language-configuration.json"
-            }
-        ],
-        "grammars": [
-            {
-                "language": "asciidoc",
-                "scopeName": "text.asciidoc",
-                "path": "./syntaxes/Asciidoctor.tmLanguage"
-            }
-        ],
-        "configuration": {
-            "type": "object",
-            "title": "AsciiDoc Option Configuration",
-            "properties": {
-                "AsciiDoc.html_generator": {
-                    "type": "string",
-                    "default": "asciidoctor -o-",
-                    "description": "command to be used for the HTML generation"
-                },
-                "AsciiDoc.runInterval": {
-                    "type": "number",
-                    "default": 1000,
-                    "description": "Control how often we will be checking for file changes"
-                },
-                "AsciiDoc.buffer_size_kB": {
-                    "type": "number",
-                    "default": 200,
-                    "description": "Maximum size of output buffer from preview command in kB. Increase if you receive a stdout maxBuffer exceeded error"
-                }
-            }
-        },
-        "keybindings": [
-            {
-                "command": "adoc.preview",
-                "key": "ctrl+shift+r",
-                "mac": "shift+cmd+r",
-                "when": "editorTextFocus && editorLangId == asciidoc"
-            },
-            {
-                "command": "adoc.previewToSide",
-                "key": "ctrl+k r",
-                "mac": "cmd+k shift+r",
-                "when": "editorTextFocus && editorLangId == asciidoc"
-            }
-        ],
-        "commands": [
-            {
-                "command": "adoc.preview",
-                "title": "Toggle Preview",
-                "category": "AsciiDoc"
-            },
-            {
-                "command": "adoc.previewToSide",
-                "title": "Open Preview to the Side",
-                "category": "AsciiDoc"
-            }
-        ],
-        "menus": {
-            "editor/title": [
-                {
-                    "command": "adoc.previewToSide",
-                    "when": "resourceLangId == asciidoc"
-                }
-            ]
+    "configuration": {
+      "type": "object",
+      "title": "AsciiDoc Option Configuration",
+      "properties": {}
+    },
+    "keybindings": [
+      {
+        "command": "adoc.preview",
+        "key": "ctrl+shift+r",
+        "mac": "shift+cmd+r",
+        "when": "editorTextFocus && editorLangId == asciidoc"
+      },
+      {
+        "command": "adoc.previewToSide",
+        "key": "ctrl+k r",
+        "mac": "cmd+k shift+r",
+        "when": "editorTextFocus && editorLangId == asciidoc"
+      }
+    ],
+    "commands": [
+      {
+        "command": "adoc.preview",
+        "title": "Toggle Preview",
+        "category": "AsciiDoc"
+      },
+      {
+        "command": "adoc.previewToSide",
+        "title": "Open Preview to the Side",
+        "category": "AsciiDoc"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "adoc.previewToSide",
+          "when": "resourceLangId == asciidoc"
         }
-    },
-    "scripts": {
-        "vscode:prepublish": "tsc -p ./",
-        "compile": "tsc -watch -p ./",
-        "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "node ./node_modules/vscode/bin/test"
-    },
-    "devDependencies": {
-        "typescript": "^2.0.3",
-        "vscode": "^1.0.0",
-        "mocha": "^2.3.3",
-        "@types/node": "^6.0.40",
-        "@types/mocha": "^2.2.32"
-    },
-    "dependencies": {
-        "file-url": "^1.0.1",
-        "tmp": "^0.0.29"
+      ]
     }
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "node ./node_modules/vscode/bin/test",
+    "vscode:prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.48",
+    "@types/node": "^9.4.6",
+    "mocha": "^5.0.1",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2",
+    "vscode": "^1.1.10"
+  },
+  "dependencies": {
+    "asciidoctor.js": "^1.5.6-preview.5"
+  }
 }
