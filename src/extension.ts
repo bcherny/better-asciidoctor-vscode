@@ -5,6 +5,7 @@ import {
   ExtensionContext,
   TextDocument,
   TextDocumentChangeEvent,
+  TextEditor,
   TextEditorSelectionChangeEvent,
   Uri,
   ViewColumn,
@@ -24,26 +25,44 @@ export function activate(context: ExtensionContext) {
   let providerRegistrations = Disposable.from(
     workspace.registerTextDocumentContentProvider(AsciiDocProvider.scheme, provider)
   )
+  let tryOpenPreviewWithProvider = tryOpenPreview(provider, context)
 
   workspace.onDidChangeTextDocument(e =>
     provider.update(makePreviewUri(e.document))
   )
 
-  let previewToSide = commands.registerCommand('adoc.previewToSide', () =>
-    createHTMLWindow(provider, window.activeTextEditor.viewColumn === ViewColumn.One
-      ? ViewColumn.Two
-      : ViewColumn.Three
-    )
+  tryOpenPreviewWithProvider(window.activeTextEditor)
+  window.onDidChangeActiveTextEditor(tryOpenPreviewWithProvider)
+
+  context.subscriptions.push(
+    providerRegistrations,
+    registerDocumentSymbolProvider()
   )
-
-  let preview = commands.registerCommand('adoc.preview', () =>
-    createHTMLWindow(provider, window.activeTextEditor.viewColumn)
-  )
-
-  let registration = registerDocumentSymbolProvider()
-
-  context.subscriptions.push(previewToSide, preview, providerRegistrations, registration)
 }
 
 // this method is called when your extension is deactivated
 export function deactivate() { }
+
+function tryOpenPreview(provider: AsciiDocProvider, context: ExtensionContext) {
+  return async (activeTextEditor: TextEditor | undefined) => {
+    let lastActiveTextEditor = context.workspaceState.get('activeTextEditor')
+    if (!activeTextEditor || activeTextEditor === lastActiveTextEditor) {
+      return
+    }
+    if (activeTextEditor.document.languageId !== 'asciidoc') {
+      // TODO: close existing tab
+      return
+    }
+    context.workspaceState.update('activeTextEditor', activeTextEditor)
+    let x = await createHTMLWindow(provider, activeTextEditor, getColumn(activeTextEditor))
+  }
+}
+
+function getColumn(activeTextEditor: TextEditor) {
+  switch (activeTextEditor.viewColumn) {
+    case ViewColumn.One:
+      return ViewColumn.Two
+    default:
+      return ViewColumn.Three
+  }
+}

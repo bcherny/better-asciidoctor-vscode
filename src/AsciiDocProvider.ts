@@ -1,6 +1,7 @@
 import AsciiDoctor from 'asciidoctor.js'
 import { readFileSync } from 'fs'
 import { basename, resolve } from 'path'
+import { None, Option, Some } from 'tsoption'
 import {
   commands,
   Disposable,
@@ -28,28 +29,25 @@ export class AsciiDocProvider implements TextDocumentContentProvider {
 
   state: State = {
     asciidoctor: AsciiDoctor(),
-    css: readFileSync(resolve(__dirname, '../../src', './static/default.css'), 'utf-8')
+    css: readFileSync(resolve(__dirname, '../../src', './index.css'), 'utf-8')
   }
 
   _onDidChange = new EventEmitter<Uri>()
 
-  private resolveDocument(uri: Uri): TextDocument | null {
-    const matches = workspace.textDocuments.filter(d => {
-      return makePreviewUri(d).toString() === uri.toString()
-    })
-    if (matches.length > 0) {
-      return matches[0]
-    } else {
-      return null
-    }
-  }
-
   provideTextDocumentContent(uri: Uri): string {
-    const doc = this.resolveDocument(uri)
-    if (doc) {
-      return this.createAsciiDocHTML(doc)
+    let document = resolveDocument(uri)
+    if (document) {
+      console.log(this.preview(document))
+      return this.preview(document)
     }
     return ''
+  }
+
+  preview(doc: TextDocument) {
+    return `
+      <style>${this.state.css}</style>
+      <body>${this.state.asciidoctor.convert(doc.getText())}</body>
+    `
   }
 
   get onDidChange(): Event<Uri> {
@@ -60,30 +58,12 @@ export class AsciiDocProvider implements TextDocumentContentProvider {
     this._onDidChange.fire(uri)
   }
 
-  private createAsciiDocHTML(doc: TextDocument): string {
-    let editor = window.activeTextEditor
+}
 
-    if (!doc || !(doc.languageId === 'asciidoc')) {
-      return this.errorSnippet("Active editor doesn't show an AsciiDoc document - no properties to preview.")
-    }
-    return this.preview(doc)
-  }
-
-  private errorSnippet(error: string): string {
-    return `
-      <body>
-        ${error}
-      </body>
-    `
-  }
-
-  preview(doc: TextDocument) {
-    return `
-      <style>${this.state.css}</style>
-      <body>${this.state.asciidoctor.convert(doc.getText())}</body>
-    `
-  }
-
+function resolveDocument(uri: Uri): TextDocument | null {
+  return workspace.textDocuments.filter(d =>
+    makePreviewUri(d).toString() === uri.toString()
+  )[0]
 }
 
 export function makePreviewUri(doc: TextDocument): Uri {
@@ -92,13 +72,14 @@ export function makePreviewUri(doc: TextDocument): Uri {
 
 export async function createHTMLWindow(
   provider: AsciiDocProvider,
+  activeTextEditor: TextEditor,
   displayColumn: ViewColumn
-): Promise<void> {
-  let previewTitle = `Preview: '${basename(window.activeTextEditor.document.fileName)}'`
-  let previewUri = makePreviewUri(window.activeTextEditor.document)
+): Promise<any> {
+  let previewTitle = `Preview: '${basename(activeTextEditor.document.fileName)}'`
+  let previewUri = makePreviewUri(activeTextEditor.document)
 
   try {
-    await commands.executeCommand('vscode.previewHtml', previewUri, displayColumn)
+    return commands.executeCommand('vscode.previewHtml', previewUri, displayColumn)
   } catch (e) {
     console.warn(e)
     window.showErrorMessage(e)
