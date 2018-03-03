@@ -1,4 +1,4 @@
-.vscode/**
-**/*.map
 .gitignore
+.vscode
 tsconfig.json
+*.map

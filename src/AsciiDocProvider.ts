@@ -28,7 +28,7 @@ export class AsciiDocProvider implements TextDocumentContentProvider {
 
   state: State = {
     asciidoctor: AsciiDoctor(),
-    css: readFileSync(resolve(__dirname, '../../src', './index.css'), 'utf-8')
+    css: readFileSync(resolve(__dirname, '../src', './index.css'), 'utf-8')
   }
 
   _onDidChange = new EventEmitter<Uri>()
@@ -36,7 +36,7 @@ export class AsciiDocProvider implements TextDocumentContentProvider {
   provideTextDocumentContent(uri: Uri): string {
     let document = resolveDocument(uri)
     if (document) {
-      writeFileSync(resolve(__dirname, '../../src', './out.html'), this.preview(document))
+      writeFileSync(resolve(__dirname, '../src', './out.html'), this.preview(document))
       return this.preview(document)
     }
     return ''
