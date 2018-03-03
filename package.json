@@ -2,7 +2,7 @@
   "name": "better-asciidoc-vscode",
   "displayName": "Better AsciiDoc (Orielly style)",
   "description": "AsciiDoc VSCode plugin with live preview - makes your Asciidoc look like an Orielly book",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "bcherny",
   "author": "Boris Cherny <boris@performancejs.com>",
   "contributors": [
