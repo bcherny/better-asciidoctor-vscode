@@ -30,7 +30,9 @@ h4,
 h5,
 h6,
 p,
-li,
+dl,
+ol,
+ul,
 pre {
   margin-bottom: 10px;
 }

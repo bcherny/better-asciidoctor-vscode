@@ -1,6 +1,6 @@
 import AsciiDoctor from 'asciidoctor.js'
 import { readFileSync, writeFileSync } from 'fs'
-import { basename, resolve } from 'path'
+import { basename, dirname, join, resolve } from 'path'
 import {
   commands,
   Disposable,
@@ -45,7 +45,7 @@ export class AsciiDocProvider implements TextDocumentContentProvider {
   preview(doc: TextDocument) {
     return `
       <style>${this.state.css}</style>
-      <body>${this.state.asciidoctor.convert(doc.getText())}</body>
+      <body>${fixPaths(doc.fileName, this.state.asciidoctor.convert(doc.getText()))}</body>
     `
   }
 
@@ -57,6 +57,17 @@ export class AsciiDocProvider implements TextDocumentContentProvider {
     this._onDidChange.fire(uri)
   }
 
+}
+
+/**
+ * @see https://github.com/HarshdeepGupta/live-html-preview/blob/d586afb/src/HTMLDocumentContentProvider.ts#L32
+ */
+function fixPaths(fileName: string, html: string) {
+  return html.replace(
+    new RegExp("((?:src|href)=[\'\"])((?!http|\\/).*?)([\'\"])", 'gmi'),
+    (_, p1, p2: string, p3: string) =>
+      `${p1}${Uri.file(join(dirname(fileName), p2))}${p3}`
+  )
 }
 
 function resolveDocument(uri: Uri): TextDocument | null {
