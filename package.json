@@ -1,7 +1,7 @@
 {
-  "name": "better-asciidoctor-vscode",
-  "displayName": "Better AsciiDoc",
-  "description": "Live preview, syntax highlighting and symbols (outline view)",
+  "name": "better-asciidoc-vscode",
+  "displayName": "Better AsciiDoc (Orielly style)",
+  "description": "AsciiDoc with live preview",
   "version": "0.0.1",
   "publisher": "bcherny",
   "author": "Boris Cherny <boris@performancejs.com>",

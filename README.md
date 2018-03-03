@@ -1,42 +1,21 @@
-[![Version](https://vsmarketplacebadge.apphb.com/version/joaompinto.asciidoctor-vscode.svg)](https://marketplace.visualstudio.com/items?itemName=joaompinto.asciidoctor-vscode)
-[![Installs](https://vsmarketplacebadge.apphb.com/installs/joaompinto.asciidoctor-vscode.svg)](https://marketplace.visualstudio.com/items?itemName=joaompinto.asciidoctor-vscode)
-[![Ratings](https://vsmarketplacebadge.apphb.com/rating/joaompinto.asciidoctor-vscode.svg)](https://vsmarketplacebadge.apphb.com/rating/joaompinto.asciidoctor-vscode.svg)
+[![Version](https://vsmarketplacebadge.apphb.com/version/bcherny.better-asciidoctor-vscode.svg)](https://marketplace.visualstudio.com/items?itemName=bcherny.better-asciidoctor-vscode)
+[![Installs](https://vsmarketplacebadge.apphb.com/installs/bcherny.better-asciidoctor-vscode.svg)](https://marketplace.visualstudio.com/items?itemName=bcherny.better-asciidoctor-vscode)
+[![Ratings](https://vsmarketplacebadge.apphb.com/rating/bcherny.better-asciidoctor-vscode.svg)](https://vsmarketplacebadge.apphb.com/rating/bcherny.better-asciidoctor-vscode.svg)
 
-# AsciiDoc Support
-A vscode support extension that provides live preview, syntax highlighting and symbols for the AsciiDoc format.
+# Better AsciiDoc (alpha)
 
-An extension to preview AsciiDoc text using the _AsciiDoctor_ publishing tool.
+Live preview, syntax highlighting, and symbols for AsciiDoc. Preview formats your Asciidoc as an Orielly book.
 
-The extension can be activated in two ways
+![](images/screenie.png)
 
-* Toggle Preview - `ctrl+shift+r` (Mac: `cmd+shift+r`)
-* Open Preview to the Side - `ctrl+k r` (Mac: `cmd+k shift+r`)
-* View symbols - go to symbol action - `ctrl+shift+o`, select a heading.
+## Installation
 
-## How to install
-Open vscode. Press `F1`, search "`ext install`" followed by extension name, in this case: "`ext install asciidoctor-vscode`" without the ">".
-Or if you prefer ">**ext install**", hit enter, search "**asciidoctor-vscode**".
+Search for `better-asciidoctor-vscode` in the VSCode extensions tab.
 
-![alt](images/simple.gif)
+## Usage
 
+Just open any file with a `.adoc` or `.asciidoc` extension, and preview will automatically open for you.
 
-## Prerequisites
+## Inspired by
 
-You need to [**install AsciiDoctor**](http://asciidoctor.org/docs/install-toolchain/ ) - A fast text processor & publishing toolchain for converting AsciiDoc to HTML5, DocBook & more.
-
-## How to build and install from source (Linux)
-```
-git clone https://github.com/joaompinto/asciidoctor-vscode
-cd asciidoctor-vscode
-npm install
-sudo npm install -g vsce typescript
-vsce package
-code --install-extension *.vsix
-```
-
-## Credits:
-This extension preview code was based on https://github.com/tht13/RST-vscode/
-
-The AsciiDoc syntax rules are based on https://github.com/asciidoctor/sublimetext-asciidoc/
-
-The symbol view is based on https://github.com/jrieken/md-navigate
+https://github.com/joaompinto/asciidoctor-vscode

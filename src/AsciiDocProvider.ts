@@ -1,5 +1,5 @@
 import AsciiDoctor from 'asciidoctor.js'
-import { readFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { basename, resolve } from 'path'
 import { None, Option, Some } from 'tsoption'
 import {
@@ -37,7 +37,7 @@ export class AsciiDocProvider implements TextDocumentContentProvider {
   provideTextDocumentContent(uri: Uri): string {
     let document = resolveDocument(uri)
     if (document) {
-      console.log(this.preview(document))
+      writeFileSync(resolve(__dirname, '../../src', './out.html'), this.preview(document))
       return this.preview(document)
     }
     return ''
