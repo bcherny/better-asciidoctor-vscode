@@ -1,7 +1,6 @@
 import AsciiDoctor from 'asciidoctor.js'
 import { readFileSync, writeFileSync } from 'fs'
 import { basename, resolve } from 'path'
-import { None, Option, Some } from 'tsoption'
 import {
   commands,
   Disposable,
