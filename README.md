@@ -6,7 +6,7 @@
 
 Live preview, syntax highlighting, and symbols for AsciiDoc. Preview formats your Asciidoc as an Orielly book.
 
-![](images/screenie.png)
+![](https://github.com/bcherny/better-asciidoctor-vscode/blob/master/images/screenie.png)
 
 ## Installation
 
