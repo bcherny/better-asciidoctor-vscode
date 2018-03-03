@@ -152,6 +152,10 @@ p code {
   text-align: left;
 }
 
+.content + .title {
+  margin: 10px 0;
+}
+
 .tableblock {
   border-collapse: collapse;
   margin: 20px 0 20px;
