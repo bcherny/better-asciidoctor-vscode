@@ -185,3 +185,19 @@ p code {
 .tableblock th p {
   margin: 0;
 }
+
+.sidebarblock {
+  border: 1px solid #00978b;
+  margin: 10px 0 20px;
+  padding: 10px;
+}
+
+.sidebarblock .title {
+  font-family: "Myriad Pro";
+  font-size: 140%;
+  font-stretch: condensed;
+  font-style: normal;
+  font-weight: 600;
+  margin: 10px 0;
+  text-align: center;
+}
