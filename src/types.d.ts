@@ -26,7 +26,7 @@ declare module 'asciidoctor.js' {
         engine?: 'v8',
         framework?: 'webextensions'
         ioModule?: 'java_nio' | 'node' | 'phantomjs' | 'spidermonkey' | 'xmlhttprequest'
-        platform?: 'browser',
+        platform?: 'browser'
       }
     }
   }

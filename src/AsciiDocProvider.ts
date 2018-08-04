@@ -1,17 +1,13 @@
 import AsciiDoctor from 'asciidoctor.js'
 import { readFileSync, writeFileSync } from 'fs'
-import { basename, dirname, join, resolve } from 'path'
+import { dirname, join, resolve } from 'path'
 import {
   commands,
-  Disposable,
   Event,
   EventEmitter,
-  ExtensionContext,
   TextDocument,
-  TextDocumentChangeEvent,
   TextDocumentContentProvider,
   TextEditor,
-  TextEditorSelectionChangeEvent,
   Uri,
   ViewColumn,
   window,
@@ -81,11 +77,9 @@ export function makePreviewUri(doc: TextDocument): Uri {
 }
 
 export async function createHTMLWindow(
-  provider: AsciiDocProvider,
   activeTextEditor: TextEditor,
   displayColumn: ViewColumn
-): Promise<any> {
-  let previewTitle = `Preview: '${basename(activeTextEditor.document.fileName)}'`
+) {
   let previewUri = makePreviewUri(activeTextEditor.document)
 
   try {

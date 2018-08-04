@@ -1,13 +1,7 @@
-import * as path from 'path'
 import {
-  commands,
   Disposable,
   ExtensionContext,
-  TextDocument,
-  TextDocumentChangeEvent,
   TextEditor,
-  TextEditorSelectionChangeEvent,
-  Uri,
   ViewColumn,
   window,
   workspace
@@ -25,7 +19,7 @@ export function activate(context: ExtensionContext) {
   let providerRegistrations = Disposable.from(
     workspace.registerTextDocumentContentProvider(AsciiDocProvider.scheme, provider)
   )
-  let tryOpenPreviewWithProvider = tryOpenPreview(provider, context)
+  let tryOpenPreviewWithProvider = tryOpenPreview(context)
 
   workspace.onDidChangeTextDocument(e =>
     provider.update(makePreviewUri(e.document))
@@ -43,7 +37,7 @@ export function activate(context: ExtensionContext) {
 // this method is called when your extension is deactivated
 export function deactivate() { }
 
-function tryOpenPreview(provider: AsciiDocProvider, context: ExtensionContext) {
+function tryOpenPreview(context: ExtensionContext) {
   return async (activeTextEditor: TextEditor | undefined) => {
     let lastActiveTextEditor = context.workspaceState.get('activeTextEditor')
     if (!activeTextEditor || activeTextEditor === lastActiveTextEditor) {
@@ -54,7 +48,7 @@ function tryOpenPreview(provider: AsciiDocProvider, context: ExtensionContext) {
       return
     }
     context.workspaceState.update('activeTextEditor', activeTextEditor)
-    let x = await createHTMLWindow(provider, activeTextEditor, getColumn(activeTextEditor))
+    await createHTMLWindow(activeTextEditor, getColumn(activeTextEditor))
   }
 }
 
