@@ -48,15 +48,6 @@ function tryOpenPreview(context: ExtensionContext) {
       return
     }
     context.workspaceState.update('activeTextEditor', activeTextEditor)
-    await createHTMLWindow(activeTextEditor, getColumn(activeTextEditor))
-  }
-}
-
-function getColumn(activeTextEditor: TextEditor) {
-  switch (activeTextEditor.viewColumn) {
-    case ViewColumn.One:
-      return ViewColumn.Two
-    default:
-      return ViewColumn.Three
+    await createHTMLWindow(activeTextEditor, ViewColumn.Two)
   }
 }
